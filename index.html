@@ -89,27 +89,68 @@
     }
   </style>
   <script>
-    function fetchData() {
-      const fetchDataBtn = document.getElementById('fetchDataBtn');
-      const loader = document.getElementById('loader');
+    let storedData = null; // Variable to store fetched data
 
-      fetchDataBtn.style.display = 'none';
-      loader.style.display = 'block';
+    async function fetchDataFromAPI() {
+      try {
+        const response = await fetch('https://cneopricefetcher.onrender.com/get-balance');
+        const data = await response.json();
+        storedData = data; // Store fetched data
+        return data;
+      } catch (error) {
+        console.log('Error fetching data:', error);
+        return null;
+      }
+    }
 
-      fetch('https://cneopricefetcher.onrender.com/get-balance')
-        .then(response => response.json())
-        .then(data => {
-          displayData(data);
-          fetchDataBtn.style.display = 'block';
-          fetchDataBtn.style.position = 'relative'; // Center the button
-          fetchDataBtn.style.margin = '0 auto'; // Center the button
-          loader.style.display = 'none';
-        })
-        .catch(error => {
-          console.log('Error fetching data:', error);
-          fetchDataBtn.style.display = 'block';
-          loader.style.display = 'none';
-        });
+    async function fetchData() {
+    const fetchDataBtn = document.getElementById('fetchDataBtn');
+    const loader = document.getElementById('loader');
+    const resultDiv = document.getElementById('result');
+
+    fetchDataBtn.style.display = 'none';
+    loader.style.display = 'block';
+
+    try {
+      let timeoutReached = false;
+      // Create a promise that resolves when storedData is populated or when the timeout is reached
+      const dataPromise = new Promise((resolve) => {
+        const checkData = () => {
+          if (storedData) {
+            resolve(storedData); // Resolve the promise with storedData if available
+          } else if (timeoutReached) {
+            resolve(null); // Resolve with null if the timeout is reached
+          } else {
+            setTimeout(checkData, 500); // Check again after 0.5 second until timeout
+          }
+        };
+        checkData();
+      });
+
+      // Wait for the data or timeout (10 seconds)
+      const data = await Promise.race([
+        dataPromise,
+        new Promise((resolve) => setTimeout(() => {
+          timeoutReached = true;
+          resolve(null); // Resolve with null when the timeout is reached
+        }, 20000))
+      ]);
+
+      if (data) {
+        displayData(data); // Display fetched data
+      } else {
+        console.log('No data fetched or timeout reached');
+        resultDiv.innerHTML = '<p>No data fetched. Please try again.</p>';
+      }
+    } catch (error) {
+      console.error('Error checking/displaying data:', error);
+      resultDiv.innerHTML = '<p>Error displaying data. Please try again.</p>';
+    }
+
+    fetchDataBtn.style.display = 'block';
+    fetchDataBtn.style.position = 'relative';
+    fetchDataBtn.style.margin = '0 auto';
+    loader.style.display = 'none';
     }
 
     function displayData(data) {
@@ -132,6 +173,10 @@
       resultDiv.style.transform = 'scale(1)';
       resultDiv.style.marginTop = '10px';
     }
+
+    window.onload = function() {
+      fetchDataFromAPI(); // Load data when the page loads
+    };
   </script>
 </head>
 <body>
