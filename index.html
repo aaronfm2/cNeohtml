@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Display Wallet Data</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    p {
+      margin: 10px 0;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .value {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .loader {
+      display: none;
+      margin-top: 50px;
+    }
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-top: 4px solid #333;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script>
+    function fetchData() {
+      const fetchDataBtn = document.getElementById('fetchDataBtn');
+      const loader = document.getElementById('loader');
+
+      fetchDataBtn.style.display = 'none';
+      loader.style.display = 'block';
+
+      fetch('https://cneopricefetcher.onrender.com/get-balance')
+        .then(response => response.json())
+        .then(data => {
+          displayData(data);
+          fetchDataBtn.style.display = 'block';
+          fetchDataBtn.style.position = 'relative'; // Center the button
+          fetchDataBtn.style.margin = '0 auto'; // Center the button
+          loader.style.display = 'none';
+        })
+        .catch(error => {
+          console.log('Error fetching data:', error);
+          fetchDataBtn.style.display = 'block';
+          loader.style.display = 'none';
+        });
+    }
+
+    function displayData(data) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <p>cNeo Balance: <span class="value">${data.cNeoBalance}</span></p>
+        <p>Neo Balance: <span class="value">${data.neoBalance}</span></p>
+        <p>cNeo Value: <span class="value">$${data.cNeoValue}</span></p>
+
+        <p>Flund Balance: <span class="value">${data.flundBalance}</span></p>
+        <p>Flm Balance: <span class="value">${data.flmBalance}</span></p>
+        <p>Flund Value: <span class="value">$${data.flundValue}</span></p>
+
+        <p>Gas Balance: <span class="value">${data.gasBalance}</span></p>
+        <p>Gas Value: <span class="value">$${data.gasValue}</span></p>
+
+        <p>USD Total: <span class="value">$${data.usdTotal}</span></p>
+        <p>GBP Total: <span class="value">£${data.gbpTotal}</span></p>
+      `;
+      resultDiv.style.transform = 'scale(1)';
+    }
+  </script>
+</head>
+<body>
+  <h1>Display Wallet Data</h1>
+  <button id="fetchDataBtn" onclick="fetchData()">Fetch Data</button>
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+  </div>
+  <div id="result" style="transform: scale(0)"></div>
+</body>
+</html>
