@@ -73,7 +73,7 @@
             <div class="data">
               <p>cNeo Balance: <span class="value" id="cNeoBalance">${data.cNeoBalance}</span></p>
               <p>Neo Balance: <span class="value" id="neoBalance">${data.neoBalance}</span></p>
-              <p>cNeo Value: <span class="value" id="cNeoValue">${data.cNeoValue}</span></p>
+              <p>cNeo Value: <span class="value" id="cNeoValue">£${data.cNeoValue}</span></p>
             </div>
           </div>
 
@@ -82,7 +82,7 @@
             <div class="data">
               <p>Flund Balance: <span class="value" id="flundBalance">${data.flundBalance}</span></p>
               <p>Flm Balance: <span class="value" id="flmBalance">${data.flmBalance}</span></p>
-              <p>Flund Value: <span class="value" id="flundValue">${data.flundValue}</span></p>
+              <p>Flund Value: <span class="value" id="flundValue"£${data.flundValue}</span></p>
             </div>
           </div>
 
@@ -90,14 +90,14 @@
             <h2>Gas Wallet</h2>
             <div class="data">
               <p>Gas Balance: <span class="value" id="gasBalance">${data.gasBalance}</span></p>
-              <p>Gas Value: <span class="value" id="gasValue">${data.gasValue}</span></p>
+              <p>Gas Value: <span class="value" id="gasValue">£${data.gasValue}</span></p>
             </div>
           </div>
 
           <div class="section">
             <h2>Total</h2>
             <div class="data">
-              <p>GBP Total: <span class="value" id="gbpTotal">${data.gbpTotal}</span></p>
+              <p>GBP Total: <span class="value" id="gbpTotal">£${data.gbpTotal}</span></p>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@
       Object.keys(data).forEach(key => {
         const element = document.getElementById(key);
         if (element) {
-          element.textContent = data[key];
+          element.textContent = `£${data[key]}`;
         }
       });
     }
