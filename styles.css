@@ -1,0 +1,118 @@
+/* Reset default margin and padding */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #9ad1d4; /* Pastel Blue */
+  }
+
+/* Set a base font and color */
+body {
+  font-family: 'Arial', sans-serif;
+  color: #444;
+}
+
+/* Header Styles */
+header {
+  background-color: #9ad1d4; /* Pastel blue */
+  padding: 5px 0;
+  margin-bottom: -5px; /* Negative margin to bring title closer */
+}
+
+.title-container {
+  text-align: center;
+  margin: 0;
+  padding-bottom: 5px; /* Reduce bottom padding */
+}
+
+.title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  padding-top: 5px; /* Add some top padding */
+}
+
+/* Main Content Styles */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin-top: -10px; /* Negative margin to bring closer to title */
+}
+
+.loader-container {
+  margin-bottom: 15px; /* Increase margin bottom */
+}
+
+/* Loader Styles */
+.loader {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #2f494b; /* Dark Pastel blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+/* Result Container Styles */
+.result-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* Adjust the gap between sections */
+}
+
+/* Section Styles */
+.section {
+  width: 300px;
+  margin: 5px; /* Reduce margin */
+  padding: 20px;
+  border: 2px solid #9ad1d4; /* Pastel blue */
+  border-radius: 10px;
+  background-color: #f5f9f9; /* Light grayish blue */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.section h2 {
+  font-size: 22px; /* Slightly reduce font size */
+  margin-bottom: 12px; /* Reduce margin bottom */
+  color: #444;
+}
+
+.data p {
+  margin: 4px 0; /* Adjust paragraph margin */
+  font-size: 16px; /* Slightly reduce font size */
+  color: #666;
+}
+
+.value {
+  font-weight: bold;
+  font-size: 18px; /* Slightly reduce font size */
+  color: #2f494b; /* Dark Pastel blue */
+  margin-left: auto;
+}
+
+/* Section Hover Effect */
+.section:hover {
+  transform: scale(1.03);
+}
+
+/* Media Query for Responsiveness */
+@media screen and (max-width: 600px) {
+  .section {
+    width: 80%;
+  }
+}
